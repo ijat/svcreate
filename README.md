@@ -1,3 +1,13 @@
+# How to build?
+
+```bash
+git clone https://github.com/ijat/svcreate.git
+cd svcreate
+mkdir build
+cmake ..
+make
+```
+
 # How to use?
 
 Run this command to start
