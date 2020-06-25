@@ -163,7 +163,7 @@ namespace inipp {
 
         void interpolate() {
             int global_iteration = 0;
-            auto changed;
+            auto changed = false;
             // replace each "${variable}" by "${section:variable}"
             for (auto & sec : sections)
                 replace_symbols(local_symbols(sec.first, sec.second), sec.second);

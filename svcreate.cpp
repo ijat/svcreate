@@ -1,14 +1,18 @@
 #include <iostream>
 #include <fstream>
 #include <filesystem>
+#include <unistd.h>
+#include <limits.h>
 #include "lib/inipp.h"
 
-#define defType "Simple"
+#define defType "simple"
 #define defTarget "multi-user.target"
 
 int main(int argc, char *argv[]) {
-
     inipp::Ini<char> ini;
+
+    char cwd[PATH_MAX];
+    getcwd(cwd, PATH_MAX);
 
     std::string ExePath = argv[1];
     std::string ExeName = std::filesystem::path(ExePath).filename().string();
@@ -21,10 +25,11 @@ int main(int argc, char *argv[]) {
     auto &service = ini.sections["Service"];
     service["Type"] = defType;
     service["ExecStart"] = ExePath;
+    service["WorkingDirectory"] = cwd;
 
     // Install section
     auto &install = ini.sections["Install"];
-    install["Install"] = defTarget;
+    install["WantedBy"] = defTarget;
 
     // Generate and save
     std::ofstream iniout;
